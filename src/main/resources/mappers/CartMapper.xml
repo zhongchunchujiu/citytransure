@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydgk.dao.CartMapper">
+    <!--Employee getEmployeeId(Integer id);-->
+    <!--<select id="" resultType="">-->
+        <!--select * from-->
+    <!--</select>-->
+
+    <select id="findCartPage" resultType="com.ydgk.beans.Cart">
+        select * from cart where uid=#{uid} limit #{pageNo},#{pageSize}
+    </select>
+
+    <insert id="addCart" parameterType="com.ydgk.beans.Cart">
+        insert into cart (uid,cid) values(#{uid},#{cid})
+    </insert>
+</mapper>

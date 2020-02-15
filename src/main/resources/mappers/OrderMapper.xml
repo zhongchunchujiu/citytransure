@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydgk.dao.OrderMapper">
+    <!--Employee getEmployeeId(Integer id);-->
+    <!--<select id="" resultType="">-->
+        <!--select * from-->
+    <!--</select>-->
+    <select id="findOrderPage" resultType="com.ydgk.beans.Order">
+        select * from dd where uid=#{id} limit #{start},#{pageSize}
+    </select>
+</mapper>

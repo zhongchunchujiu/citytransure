@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ydgk.dao.CommodityMapper">
+    <!--Employee getEmployeeId(Integer id);-->
+    <select id="findCommodityByRecommend" resultType="com.ydgk.beans.Commodity">
+        select * from commodity where recommend = #{recommend}
+    </select>
+
+    <select id="findPageCommodity" resultType="com.ydgk.beans.Commodity">
+        select * from commodity where type=#{type} limit #{pageNo},#{pageSize}
+    </select>
+
+    <select id="commodityPage" resultType="com.ydgk.beans.Commodity">
+        select * from commodity
+            <where>
+                <if test="likeName!=null and likeName!=''">
+                   And name like concat('%',#{likeName},'%')
+                </if>
+                <if test="type!=null and type !='' and type!=0">
+                    And type = #{type}
+                </if>
+                <if test="type==0">
+                    And recommend = 1
+                </if>
+            </where>
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="findMaxTotal" resultType="java.lang.Integer">
+        select count(*) from commodity
+        <where>
+            <if test="likeName!=null and likeName!=''">
+                And name like concat('%',#{likeName},'%')
+            </if>
+            <if test="type!=null and type !='' and type!=0">
+                And type = #{type}
+            </if>
+            <if test="type==0">
+                And recommend = 1
+            </if>
+        </where>
+    </select>
+
+    <delete id="batchDeleteCommodity">
+        delete from commodity where id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertCommodity">
+        insert into commodity (name,price,discount,picture,recommend,type) values (#{name},#{price},#{discount},#{picture},#{recommend},#{type})
+    </insert>
+
+    <update id="updateCommodity">
+        update commodity set picture=#{picture},name=#{name},price=#{price},discount=#{discount},recommend=#{recommend} where id=#{id}
+    </update>
+
+</mapper>
